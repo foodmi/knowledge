@@ -25,42 +25,40 @@
 
 ### Langues de l'app (30 langues dans le repo)
 
-| Code | Langue | Tier | Screenshots | Store metadata |
-|------|--------|------|-------------|----------------|
-| en | Anglais | 1 | [ ] | [ ] |
-| fr | Francais | 1 | [ ] | [ ] |
-| ar | Arabe (RTL) | 1 | [ ] | [ ] |
-| es | Espagnol | 1 | [ ] | [ ] |
-| de | Allemand | 1 | [ ] | [ ] |
-| pt | Portugais | 1 | [ ] | [ ] |
-| it | Italien | 2 | [ ] | [ ] |
-| nl | Neerlandais | 2 | [ ] | [ ] |
-| tr | Turc | 2 | [ ] | [ ] |
-| ru | Russe | 2 | [ ] | [ ] |
-| pl | Polonais | 2 | [ ] | [ ] |
-| ja | Japonais | 2 | [ ] | [ ] |
-| ko | Coreen | 2 | [ ] | [ ] |
-| zh | Chinois | 2 | [ ] | [ ] |
-| id | Indonesien | 2 | [ ] | [ ] |
-| th | Thai | 2 | [ ] | [ ] |
-| vi | Vietnamien | 2 | [ ] | [ ] |
-| sv | Suedois | 3 | [ ] | [ ] |
-| no | Norvegien | 3 | [ ] | [ ] |
-| da | Danois | 3 | [ ] | [ ] |
-| fi | Finnois | 3 | [ ] | [ ] |
-| ro | Roumain | 3 | [ ] | [ ] |
-| hu | Hongrois | 3 | [ ] | [ ] |
-| cs | Tcheque | 3 | [ ] | [ ] |
-| sk | Slovaque | 3 | [ ] | [ ] |
-| sl | Slovene | 3 | [ ] | [ ] |
-| hr | Croate | 3 | [ ] | [ ] |
-| bg | Bulgare | 3 | [ ] | [ ] |
-| el | Grec | 3 | [ ] | [ ] |
-| et | Estonien | 3 | [ ] | [ ] |
+Toutes les 30 langues d'un coup au lancement.
 
-**Tier 1** : faire en premier (marches prioritaires)
-**Tier 2** : faire semaine 2-3 (gros marches ou fort pouvoir d'achat)
-**Tier 3** : faire mois 2+ (volume supplementaire)
+| Code | Langue | Screenshots | Store metadata |
+|------|--------|-------------|----------------|
+| en | Anglais | [ ] | [ ] |
+| fr | Francais | [ ] | [ ] |
+| ar | Arabe (RTL) | [ ] | [ ] |
+| es | Espagnol | [ ] | [ ] |
+| de | Allemand | [ ] | [ ] |
+| pt | Portugais | [ ] | [ ] |
+| it | Italien | [ ] | [ ] |
+| nl | Neerlandais | [ ] | [ ] |
+| tr | Turc | [ ] | [ ] |
+| ru | Russe | [ ] | [ ] |
+| pl | Polonais | [ ] | [ ] |
+| ja | Japonais | [ ] | [ ] |
+| ko | Coreen | [ ] | [ ] |
+| zh | Chinois | [ ] | [ ] |
+| id | Indonesien | [ ] | [ ] |
+| th | Thai | [ ] | [ ] |
+| vi | Vietnamien | [ ] | [ ] |
+| sv | Suedois | [ ] | [ ] |
+| no | Norvegien | [ ] | [ ] |
+| da | Danois | [ ] | [ ] |
+| fi | Finnois | [ ] | [ ] |
+| ro | Roumain | [ ] | [ ] |
+| hu | Hongrois | [ ] | [ ] |
+| cs | Tcheque | [ ] | [ ] |
+| sk | Slovaque | [ ] | [ ] |
+| sl | Slovene | [ ] | [ ] |
+| hr | Croate | [ ] | [ ] |
+| bg | Bulgare | [ ] | [ ] |
+| el | Grec | [ ] | [ ] |
+| et | Estonien | [ ] | [ ] |
 
 ### Icone
 - [ ] Valider icone 1024x1024 PNG (pas de transparence pour iOS)
@@ -77,11 +75,10 @@ Contenu des 6 screenshots :
 5. "Coach IA personnalise" -- chat assistant
 6. "30+ langues, Halal, Vegan" -- differenciateur
 
-Methode :
-- [ ] Creer template Figma/Canva avec cadre device + zone texte
+Methode : **GPT Image 2**
 - [ ] Capturer les 6 ecrans dans l'app
 - [ ] Generer les textes marketing dans les 30 langues
-- [ ] Injecter les textes traduits dans le template (script ou manuellement)
+- [ ] Generer les screenshots avec GPT Image 2 (cadre device + texte marketing + capture ecran)
 - [ ] Exporter pour iOS : 3 tailles x 6 screenshots x 30 langues = 540 images
   - 6.7" (1290x2796)
   - 6.5" (1242x2688)
@@ -89,23 +86,17 @@ Methode :
 - [ ] Exporter pour Google Play : 1 taille x 6 screenshots x 30 langues = 180 images
   - Portrait 9:16 (min 320px, max 3840px)
 
-Total : **720 images** (automatiser avec Figma + script de texte)
-
-Ordre de production :
-1. [ ] Tier 1 (6 langues) -- 108 images iOS + 36 Play = **144 images**
-2. [ ] Tier 2 (12 langues) -- 216 images iOS + 72 Play = **288 images**
-3. [ ] Tier 3 (12 langues) -- 216 images iOS + 72 Play = **288 images**
+Total : **720 images** -- tout generer d'un coup pour les 30 langues
 
 ### Feature Graphic Google Play
 - [ ] Banniere 1024x500 avec logo + tagline + apercu app
-- [ ] 1 par langue (30 total) ou 1 universel en anglais
+- [ ] 1 par langue (30 total) via GPT Image 2
 
 ### Video Preview (optionnel mais +25% conversion)
 - [ ] 15-30 secondes, portrait 9:16
 - [ ] Montrer le scan en action (le "wow moment")
 - [ ] Sous-titres integres (son off par defaut)
-- [ ] Version FR + EN minimum
-- [ ] Decliner sous-titres pour les 30 langues si possible
+- [ ] Decliner sous-titres pour les 30 langues
 
 ### Custom Store Listings Google Play (4 CSL x 30 langues)
 
@@ -117,9 +108,8 @@ Ordre de production :
 | Halal | "Foodmi - Halal Calorie Tracker" | Filtre Halal, 30 langues |
 
 - [ ] Chaque CSL a ses propres screenshots et description
-- [ ] Chaque CSL doit etre traduit separement (pas d'heritage de la listing par defaut)
-- [ ] Tier 1 d'abord (6 langues x 4 CSL = 24 listings)
-- [ ] Tier 2-3 ensuite
+- [ ] Chaque CSL traduit pour les 30 langues (pas d'heritage de la listing par defaut)
+- [ ] 4 CSL x 30 langues = 120 listings
 
 ### Store Metadata (titre, subtitle, keywords, description) par langue
 
@@ -131,10 +121,7 @@ Pour chaque langue :
 - [ ] Description longue Google Play (4000 chars) avec keywords locaux
 - [ ] Release notes
 
-Ordre :
-1. [ ] Tier 1 : EN, FR, AR, ES, DE, PT
-2. [ ] Tier 2 : IT, NL, TR, RU, PL, JA, KO, ZH, ID, TH, VI
-3. [ ] Tier 3 : SV, NO, DA, FI, RO, HU, CS, SK, SL, HR, BG, EL, ET
+- [ ] Generer tout d'un coup pour les 30 langues
 
 ## TODO -- Config & Blockers (Priorite 1)
 
