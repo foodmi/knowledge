@@ -64,10 +64,9 @@
 - [ ] Permission camera
 
 ### Monetisation
-- [ ] Trial 7 jours gratuit
-- [ ] Abonnement mensuel / annuel
-- [ ] Feature gating (scans illimites, assistant IA, rapports en premium)
-- Pas de pubs
+- [ ] Trial 3 jours
+- [ ] Abonnement mensuel / annuel (RevenueCat)
+- Pas de version gratuite, pas de pubs
 
 ### i18n
 - [ ] 30 langues supportees

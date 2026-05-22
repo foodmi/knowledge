@@ -49,10 +49,8 @@ FoodMi est une application mobile de suivi nutritionnel avec reconnaissance alim
 
 ## Business Model
 
-- **Freemium** : version gratuite avec limitations
-- **Premium** : trial 7 jours, abonnement mensuel/annuel (RevenueCat)
-- Feature gating : scans illimites, assistant IA, rapports sante en premium
-- **Pas de pubs** dans l'app
+- **Premium only** : trial 3 jours, puis abonnement mensuel/annuel (RevenueCat)
+- Pas de version gratuite, pas de pubs
 
 ## Vision
 
