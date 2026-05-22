@@ -4,7 +4,7 @@
 
 1. **iOS Bundle ID mismatch** : Xcode a `com.adamchafqani.scanflow`, doit etre `com.FoodMi.FoodMi`
 2. **iOS flavors manquants** : pas de schemes Xcode pour dev/prod -> builder sans `--flavor`, utiliser `--dart-define`
-3. **AdMob IDs de test** : `ca-app-pub-3940256099942544` dans les manifests -> creer compte AdMob ou desactiver pour le launch
+3. **AdMob a retirer** : les IDs de test sont encore dans les manifests -> supprimer toute integration AdMob (pas de pubs)
 4. **Website pas deploye** : privacy/terms inaccessibles -> deployer sur Vercel d'abord
 
 ## Build Android

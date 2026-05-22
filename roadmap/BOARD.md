@@ -15,7 +15,7 @@
 - [ ] Deployer website sur Vercel + domaine foodmi.app
 - [ ] Fix iOS Bundle ID (`com.adamchafqani.scanflow` -> `com.FoodMi.FoodMi`)
 - [ ] Fix iOS flavors (retirer `--flavor`, utiliser `--dart-define`)
-- [ ] Fix AdMob IDs de test -> vrais IDs ou desactiver
+- [ ] Retirer AdMob du code (pas de pubs)
 - [ ] Remplacer 13x `href="#"` dans le site (store badges + socials)
 
 ## TODO -- Launch Sprint (Priorite 1)

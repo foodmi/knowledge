@@ -9,7 +9,7 @@ Objectif : sortir FoodMi sur les deux stores en 5 jours.
 | 01 | Unifier Bundle ID iOS dans Xcode | DEV | 30 min | [ ] |
 | 02 | Resoudre iOS flavors (methode KISS: --dart-define) | DEV | 15 min | [ ] |
 | 03 | Creer/verifier comptes Play Console + App Store Connect | ADMIN | 20 min | [ ] |
-| 04 | AdMob : desactiver pour le launch | DEV | 30 min | [ ] |
+| 04 | Retirer AdMob du code (pas de pubs) | DEV | 30 min | [ ] |
 | 05 | Verifier Privacy Policy + Terms (deja codes, juste deployer le site) | -- | -- | [ ] |
 | 06 | GitHub Secrets pour CI/CD | DEV | 30 min | [ ] |
 

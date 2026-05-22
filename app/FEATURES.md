@@ -66,8 +66,8 @@
 ### Monetisation
 - [ ] Trial 7 jours gratuit
 - [ ] Abonnement mensuel / annuel
-- [ ] Version gratuite avec pubs (AdMob)
 - [ ] Feature gating (scans illimites, assistant IA, rapports en premium)
+- Pas de pubs
 
 ### i18n
 - [ ] 30 langues supportees

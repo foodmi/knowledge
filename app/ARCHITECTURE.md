@@ -12,7 +12,7 @@ Repo : [foodmi/app](https://github.com/foodmi/app)
 | Backend | Supabase (PostgreSQL, Auth, Storage, Edge Functions) |
 | IA | OpenRouter API (Claude Sonnet 4, GPT-5.3) + Genkit + genkit_openai |
 | Auth | Supabase Auth + Google Sign-In |
-| Monetisation | RevenueCat (purchases_flutter), Google Mobile Ads |
+| Monetisation | RevenueCat (purchases_flutter) |
 | Stockage local | Hive (chiffre) + SharedPreferences |
 | CI/CD | GitHub Actions (3 workflows: android, ios, test) |
 | i18n | 30 langues via ARB files |

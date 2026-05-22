@@ -27,7 +27,7 @@ FoodMi est une application mobile de suivi nutritionnel avec reconnaissance alim
 | Mobile | Flutter 3.x + Dart + Riverpod |
 | Backend | Supabase (PostgreSQL, Auth, Storage, Edge Functions) |
 | IA | OpenRouter (Claude Sonnet 4, GPT-5.3) + Genkit |
-| Monetisation | RevenueCat + Google AdMob |
+| Monetisation | RevenueCat |
 | Website | Next.js 16 + next-intl (5 langues) |
 | CI/CD | GitHub Actions |
 | Hosting site | Vercel (a deployer) |
@@ -49,9 +49,10 @@ FoodMi est une application mobile de suivi nutritionnel avec reconnaissance alim
 
 ## Business Model
 
-- **Freemium** : version gratuite avec pubs (Google AdMob)
+- **Freemium** : version gratuite avec limitations
 - **Premium** : trial 7 jours, abonnement mensuel/annuel (RevenueCat)
 - Feature gating : scans illimites, assistant IA, rapports sante en premium
+- **Pas de pubs** dans l'app
 
 ## Vision
 
