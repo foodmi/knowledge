@@ -1,87 +1,138 @@
-# Sprint Launch -- Play Store + App Store
+# Sprints Hebdomadaires
 
-Objectif : sortir FoodMi sur les deux stores en 5 jours.
+Chaque semaine on pioche des taches par type. On coche ce qui est fait, le reste passe a la semaine suivante.
 
-## Jour 1 (Lun) -- Fix Config + Comptes
+---
 
-| # | Tache | Type | Duree | Etat |
-|---|-------|------|-------|------|
-| 01 | Unifier Bundle ID iOS dans Xcode | DEV | 30 min | [ ] |
-| 02 | Resoudre iOS flavors (methode KISS: --dart-define) | DEV | 15 min | [ ] |
-| 03 | Creer/verifier comptes Play Console + App Store Connect | ADMIN | 20 min | [ ] |
-| 04 | Retirer AdMob du code (pas de pubs) | DEV | 30 min | [ ] |
-| 05 | Verifier Privacy Policy + Terms (deja codes, juste deployer le site) | -- | -- | [ ] |
-| 06 | GitHub Secrets pour CI/CD | DEV | 30 min | [ ] |
+## Semaine 1 -- Config + Deploy + Visuels Tier 1
 
-**Parallele J1-J2 : Deployer website foodmi.app** (voir [[website/DEPLOYMENT]])
+### DEV
+- [ ] Unifier Bundle ID iOS dans Xcode
+- [ ] Resoudre iOS flavors (--dart-define au lieu de --flavor)
+- [ ] Retirer AdMob du code
+- [ ] Nettoyer deps pubspec inutilisees
+- [ ] GitHub Secrets pour CI/CD
+- [ ] Build AAB Android
+- [ ] Build IPA iOS
 
-## Jour 2 (Mar) -- ASO + Metadata + Screenshots
+### ADMIN
+- [ ] Creer/verifier comptes Play Console + App Store Connect
+- [ ] Creer app en draft sur les deux stores
+- [ ] Configurer produits RevenueCat dans les 2 stores
 
-| # | Tache | Type | Duree | Etat |
-|---|-------|------|-------|------|
-| 07 | Titre + Subtitle optimises | MARKETING | 30 min | [ ] |
-| 08 | Description longue Google Play (4000 chars, 80+ keywords) | MARKETING | 1h | [ ] |
-| 09 | 6 screenshots (3 tailles iOS + 1 Play) | MARKETING | 3h | [ ] |
-| 10 | 4 Custom Store Listings Google Play | MARKETING | 2h | [ ] |
-| 11 | Icone app finale (1024x1024) | DESIGN | 30 min | [ ] |
+### DESIGN
+- [ ] Valider icone 1024x1024 PNG
+- [ ] Generer toutes tailles icone (`flutter_launcher_icons`)
+- [ ] Creer template screenshots (Figma/Canva) avec cadre device + zone texte
+- [ ] Capturer les 6 ecrans dans l'app
+- [ ] Screenshots Tier 1 : EN, FR, AR, ES, DE, PT (6 langues x 6 screenshots x 4 tailles = 144 images)
+- [ ] Feature Graphic Google Play (1024x500)
 
-## Jour 3 (Mer) -- Build + Sign + Upload
+### MARKETING
+- [ ] Titre + Subtitle optimises (EN + FR)
+- [ ] Keywords iOS (100 chars) EN + FR
+- [ ] Description longue Google Play EN + FR (4000 chars, 80+ keywords)
+- [ ] Release notes FR + EN
 
-| # | Tache | Type | Duree | Etat |
-|---|-------|------|-------|------|
-| 12 | Incrementer version (1.0.0+1) | DEV | 5 min | [ ] |
-| 13 | Build Android AAB | DEV | 20 min | [ ] |
-| 14 | Build iOS IPA | DEV | 30 min | [ ] |
-| 15 | Upload sur les deux stores | DEV | 40 min | [ ] |
-| 16 | RevenueCat : configurer produits dans les stores | ADMIN | 1h | [ ] |
+### WEBSITE
+- [ ] Deployer sur Vercel + domaine foodmi.app
+- [ ] Remplacer 13x href="#" (store badges + socials)
+- [ ] Fix sitemap (retirer /login)
+- [ ] Ajouter composant Comparison dans page.tsx
 
-## Jour 4 (Jeu) -- Review Prep + Legal
+---
 
-| # | Tache | Type | Duree | Etat |
-|---|-------|------|-------|------|
-| 17 | Content Rating (IARC) Google Play | ADMIN | 15 min | [ ] |
-| 18 | Data Safety Google Play | ADMIN | 30 min | [ ] |
-| 19 | App Privacy Apple | ADMIN | 30 min | [ ] |
-| 20 | HealthKit review notes | DEV | 15 min | [ ] |
-| 21 | Compte demo pour Apple reviewer | DEV | 15 min | [ ] |
-| 22 | Release notes FR + EN | MARKETING | 15 min | [ ] |
-| 23 | Recruter 30-50 beta testers | MARKETING | 30 min | [ ] |
+## Semaine 2 -- Upload + Review + Visuels Tier 2
 
-## Jour 5 (Ven) -- Submit + Distribution
+### DEV
+- [ ] Upload AAB sur Play Console
+- [ ] Upload IPA sur App Store Connect
+- [ ] Compte demo pour Apple reviewer
+- [ ] HealthKit review notes
 
-| # | Tache | Type | Duree | Etat |
-|---|-------|------|-------|------|
-| 24 | Submit for Review (les 2 stores) | ADMIN | 15 min | [ ] |
-| 25 | Preparer draft ProductHunt | MARKETING | 1h | [ ] |
-| 26 | Premier article Medium | MARKETING | 1h | [ ] |
-| 27 | Apple Search Ads ($200 longtail) | MARKETING | 1h | [ ] |
-| 28 | Schema.org + posts Reddit/IndieHackers | MARKETING | 30 min | [ ] |
+### ADMIN
+- [ ] Content Rating (IARC) Google Play
+- [ ] Data Safety Google Play
+- [ ] App Privacy (nutrition labels) Apple
+- [ ] Submit for Review (Apple)
+- [ ] Start rollout (Google Play)
 
-## Post-Launch J+0 a J+7
+### DESIGN
+- [ ] Screenshots Tier 2 : IT, NL, TR, RU, PL, JA, KO, ZH, ID, TH, VI (11 langues)
+- [ ] Video preview 15-30s (optionnel)
 
-```
-J+0  App approuvee -> Apple Search Ads ON
-     -> Lancer ProductHunt
-     -> Demander reviews aux 50 beta testers
-     -> Reddit, HackerNews, IndieHackers
+### MARKETING
+- [ ] Store metadata Tier 1 : titre, subtitle, keywords, descriptions pour AR, ES, DE, PT
+- [ ] 4 Custom Store Listings (Scanner, Weight Loss, Macro, Halal) en EN + FR
+- [ ] Recruter 50 beta testers pour reviews
+- [ ] Preparer draft ProductHunt
 
-J+1  -> Article Medium
-     -> 5 reponses Quora
-     -> Premier post LinkedIn
+---
 
-J+2  -> Analyser premiers rankings
-     -> Ajuster keywords si besoin
-     -> Activer les 4 CSL Google Play
+## Semaine 3 -- Post-launch + Distribution + Visuels Tier 3
 
-J+3  -> Repondre a CHAQUE review
-     -> Preparer A/B test screenshots
+### DESIGN
+- [ ] Screenshots Tier 3 : SV, NO, DA, FI, RO, HU, CS, SK, SL, HR, BG, EL, ET (13 langues)
+- [ ] CSL screenshots par langue (Tier 1 d'abord)
 
-J+5  -> Premiere iteration ASO
-     -> Preparer Meta Ads si budget
+### MARKETING
+- [ ] Store metadata Tier 2 : IT, NL, TR, RU, PL, JA, KO, ZH, ID, TH, VI
+- [ ] Lancer ProductHunt
+- [ ] Premier article Medium
+- [ ] 5 reponses Quora
+- [ ] Premier post LinkedIn
+- [ ] Posts Reddit (r/loseit, r/nutrition, r/caloriecount)
+- [ ] Poster sur Indie Hackers
+- [ ] Apple Search Ads ($200, longtail keywords)
 
-J+7  -> Fin du boost Apple (7 jours)
-     -> Bilan : downloads, rankings, reviews, conversion
-     -> Planifier sprint semaine 2
-```
+### WEBSITE
+- [ ] Configurer Google Analytics
+- [ ] Schema.org Organization
+- [ ] Configurer robots.txt pour AI crawlers
 
-**Rappel** : Apple donne un boost algorithmique de 7 jours aux nouvelles apps. Ne pas gaspiller cette fenetre.
+---
+
+## Semaine 4 -- Iteration ASO + Contenu
+
+### MARKETING
+- [ ] Store metadata Tier 3 : SV, NO, DA, FI, RO, HU, CS, SK, SL, HR, BG, EL, ET
+- [ ] CSL par langue Tier 2
+- [ ] Analyser rankings keywords, ajuster ceux qui marchent pas
+- [ ] Repondre a CHAQUE review store
+- [ ] A/B test screenshots (Google Play Console)
+- [ ] 2eme article Medium
+- [ ] 5 nouvelles reponses Quora
+- [ ] 2 posts LinkedIn
+
+### WEBSITE
+- [ ] Creer llms.txt
+- [ ] Soumettre sitemap a Google Search Console + Bing
+- [ ] Creer profil Crunchbase
+
+### DEV
+- [ ] Connecter scan camera reel a Genkit vision
+- [ ] Connecter chat assistant a Genkit
+
+---
+
+## Semaine 5+ -- Scale contenu + App backend
+
+### MARKETING
+- [ ] CSL par langue Tier 3
+- [ ] Iteration ASO mensuelle (3-5 keywords)
+- [ ] 1 article Medium/semaine
+- [ ] 5 reponses Quora/semaine
+- [ ] 3 posts LinkedIn/semaine
+- [ ] Preparer Meta Ads si budget
+
+### WEBSITE
+- [ ] Pages comparaison : Foodmi vs MyFitnessPal, vs CalAI
+- [ ] Pages programmatiques "Calories in [food]" (top 100)
+
+### DEV
+- [ ] Dashboard : charger donnees reelles depuis Supabase
+- [ ] Meal logging : creer le module
+- [ ] Exercice : sauvegarder en Supabase
+- [ ] Profil : charger donnees user reelles
+- [ ] Settings : brancher les callbacks
+- [ ] Recherche aliment : requeter Supabase au lieu de mock
