@@ -1,16 +1,12 @@
 # FoodMi Knowledge Base
 
-Base de connaissance partagee pour l'equipe FoodMi. Ouvrir ce dossier dans Obsidian pour une navigation optimale.
+Base de connaissance partagee pour FoodMi. Ouvrir ce dossier dans Obsidian pour une navigation optimale.
 
 ## Structure
 
 ```
 knowledge/
 ├── CONTEXT.md                  # Vision, produit, positionnement
-├── team/
-│   ├── ADAM.md                 # Profil Adam (dev/tech lead)
-│   ├── KARIM.md                # Profil Karim (marketing/ASO)
-│   └── WORKFLOW.md             # Protocole equipe (TDAH, async, anti-burnout)
 ├── app/
 │   ├── ARCHITECTURE.md         # Stack technique Flutter + Supabase
 │   ├── FEATURES.md             # Features existantes
@@ -36,7 +32,7 @@ knowledge/
 
 ## Comment utiliser
 
-1. **Cloner** : `git clone git@github.com:foodmi/knowledge.git`
+1. **Cloner** : `git clone https://github.com/foodmi/knowledge.git`
 2. **Ouvrir dans Obsidian** : File > Open Vault > selectionner ce dossier
 3. **Plugin Obsidian Git** : installer pour auto-sync (pull/push toutes les 5 min)
 4. **Avant de vibecoder** : lire `CONTEXT.md` + la section pertinente

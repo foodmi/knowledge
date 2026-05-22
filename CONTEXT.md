@@ -12,12 +12,13 @@ FoodMi est une application mobile de suivi nutritionnel avec reconnaissance alim
 - Differenciateur : IA + 30 langues + support Halal/Vegan + RTL arabe
 - Cible : adultes 18-45 soucieux de leur sante, tech-savvy
 
-## Equipe
+## Contraintes equipe
 
-- **Adam Chafqani** -- Fondateur, dev lead (Flutter, Supabase, IA)
-- **Karim** -- Co-fondateur, marketing/ASO
-- Equipe de 2, bootstrap, zero budget marketing
-- Les deux ont le TDAH -- workflow adapte (voir [[team/WORKFLOW]])
+- Petite equipe bootstrap, zero budget marketing
+- TDAH -- les taches doivent etre decoupees en micro-actions de 15-30 min max
+- Methode Pomodoro (25 min focus / 5 min break)
+- 6h de travail effectif max par jour
+- Async-first, KISS (pas de setup qui prend >2h)
 
 ## Stack Technique
 
