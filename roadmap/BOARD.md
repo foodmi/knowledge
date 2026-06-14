@@ -65,28 +65,33 @@ Toutes les 30 langues d'un coup au lancement.
 - [ ] Generer toutes les tailles via `flutter_launcher_icons`
 - [ ] Verifier rendu sur fond clair et sombre
 
-### Screenshots (6 ecrans par langue)
+### Screenshots (8 ecrans par langue)
 
-Contenu des 6 screenshots :
-1. "Scanne ton repas en 3 secondes" -- scan AI en action
-2. "Resultats nutritionnels instantanes" -- macros breakdown
-3. "Suis tes calories automatiquement" -- journal/dashboard
-4. "Atteins tes objectifs" -- graphiques progression
-5. "Coach IA personnalise" -- chat assistant
-6. "30+ langues, Halal, Vegan" -- differenciateur
+Contenu des 8 screenshots ASO :
 
-Methode : **GPT Image 2**
-- [ ] Capturer les 6 ecrans dans l'app
+| # | Feature | Tagline EN | Description |
+|---|---------|-----------|-------------|
+| 1 | Scan | *Scan your meal in 3 seconds* | AI calorie tracking made easy — snap a photo, get instant results |
+| 2 | Nutrition | *Analyze everything you eat* | AI breaks down every meal into calories, protein, carbs, fat |
+| 3 | Chat | *Chat with your AI dietitian 24/7* | Personalized nutrition advice anytime, anywhere |
+| 4 | Diet Plan | *AI creates your personalized diet plan* | Tailored to your body, goals and preferences |
+| 5 | Tracker | *Track calories burned daily* | Log activities and see your real net balance |
+| 6 | Water | *Track your water intake* | Stay hydrated with daily water tracking |
+| 7 | Weight | *Watch the weight drop off* | Before & after photos + weight tracker to see your progress |
+| 8 | Barcode | *Free barcode scanner* | Scan any product barcode for instant nutrition info |
+
+Methode : **GPT Image 2 via Fal.ai**
+- [ ] Generer les 8 screenshots EN avec GPT Image 2 (device frame iPhone 15 Pro + fond sombre #0E0E11 + mascotte piment FoodMi + tagline)
 - [ ] Generer les textes marketing dans les 30 langues
-- [ ] Generer les screenshots avec GPT Image 2 (cadre device + texte marketing + capture ecran)
-- [ ] Exporter pour iOS : 3 tailles x 6 screenshots x 30 langues = 540 images
+- [ ] Decliner les 8 screenshots pour les 30 langues
+- [ ] Exporter pour iOS : 3 tailles x 8 screenshots x 30 langues = 720 images
   - 6.7" (1290x2796)
   - 6.5" (1242x2688)
   - 5.5" (1242x2208)
-- [ ] Exporter pour Google Play : 1 taille x 6 screenshots x 30 langues = 180 images
+- [ ] Exporter pour Google Play : 1 taille x 8 screenshots x 30 langues = 240 images
   - Portrait 9:16 (min 320px, max 3840px)
 
-Total : **720 images** -- tout generer d'un coup pour les 30 langues
+Total : **960 images** -- tout generer d'un coup pour les 30 langues
 
 ### Feature Graphic Google Play
 - [ ] Banniere 1024x500 avec logo + tagline + apercu app

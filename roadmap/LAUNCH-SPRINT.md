@@ -28,13 +28,20 @@ Tout generer avec GPT Image 2 pour les 30 langues d'un coup.
 - [ ] Generer toutes tailles (`flutter_launcher_icons`)
 
 **Screenshots 30 langues (GPT Image 2)**
-6 ecrans a generer :
-1. "Scanne ton repas en 3 secondes" -- scan AI en action
-2. "Resultats nutritionnels instantanes" -- macros breakdown
-3. "Suis tes calories automatiquement" -- journal/dashboard
-4. "Atteins tes objectifs" -- graphiques progression
-5. "Coach IA personnalise" -- chat assistant
-6. "30+ langues, Halal, Vegan" -- differenciateur
+8 ecrans a generer :
+
+| # | Feature | Tagline EN | Description |
+|---|---------|-----------|-------------|
+| 1 | Scan | *Scan your meal in 3 seconds* | AI calorie tracking made easy — snap a photo, get instant results |
+| 2 | Nutrition | *Analyze everything you eat* | AI breaks down every meal into calories, protein, carbs, fat |
+| 3 | Chat | *Chat with your AI dietitian 24/7* | Personalized nutrition advice anytime, anywhere |
+| 4 | Diet Plan | *AI creates your personalized diet plan* | Tailored to your body, goals and preferences |
+| 5 | Tracker | *Track calories burned daily* | Log activities and see your real net balance |
+| 6 | Water | *Track your water intake* | Stay hydrated with daily water tracking |
+| 7 | Weight | *Watch the weight drop off* | Before & after photos + weight tracker to see your progress |
+| 8 | Barcode | *Free barcode scanner* | Scan any product barcode for instant nutrition info |
+
+Style : fond sombre #0E0E11, glow orange #E84520, mascotte piment FoodMi, iPhone 15 Pro mockup, texte blanc bold.
 
 Pour chaque langue, generer les textes marketing traduits puis generer les screenshots avec GPT Image 2 :
 
