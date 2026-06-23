@@ -1,78 +1,203 @@
-# App FoodMi -- Build & Deploiement
+# App Foodmi -- Build & Deploiement
 
-## Blockers connus (au 22 mai 2026)
+Reference app : `foodmi/app` commit `f28ede8e` sur `main`.
+Date : 23 juin 2026.
 
-1. **iOS Bundle ID mismatch** : Xcode a `com.adamchafqani.scanflow`, doit etre `com.FoodMi.FoodMi`
-2. **iOS flavors manquants** : pas de schemes Xcode pour dev/prod -> builder sans `--flavor`, utiliser `--dart-define`
-3. **AdMob a retirer** : les IDs de test sont encore dans les manifests -> supprimer toute integration AdMob (pas de pubs)
-4. **Website pas deploye** : privacy/terms inaccessibles -> deployer sur Vercel d'abord
+## Decision release
 
-## Build Android
+| Plateforme | Statut | Action |
+|------------|--------|--------|
+| iOS | Priorite mainnet | Finaliser build production, App Store Connect, privacy, notes reviewer |
+| Android | Pas pret Play Store | Qualifier AAB, Play Console, Health Connect, Data Safety, tests multi-supports |
+
+Ne pas publier Android tant que `app/PLAY_STORE_READINESS.md` n'est pas coche.
+
+## Environnements
+
+| Env | Entry point | Android flavor | Bundle/applicationId | Supabase |
+|-----|-------------|----------------|----------------------|----------|
+| Dev | `lib/main_dev.dart` | `dev` | `com.Foodmi.Foodmi.dev` | `rpsjptvowzijinwxhvsl` |
+| Prod | `lib/main_production.dart` | `production` | `com.Foodmi.Foodmi` | `kiojfmsvckighowrceei` |
+
+Le script local officiel est :
 
 ```bash
+scripts/foodmi_app.sh <dev|prod> <ios|android> <build|run|install> [--device DEVICE_ID] [--mode debug|release|profile]
+```
+
+## Secrets locaux requis
+
+Dans `.env` local, jamais committe :
+
+```bash
+SUPABASE_DEV_ANON_KEY=...
+SUPABASE_PROD_ANON_KEY=...
+GOOGLE_WEB_CLIENT_ID=...
+GOOGLE_IOS_DEV_CLIENT_ID=...
+GOOGLE_IOS_PROD_CLIENT_ID=...
+REVENUECAT_APPLE_API_KEY=...
+REVENUECAT_GOOGLE_API_KEY=...
+```
+
+Secrets operateur uniquement pour scripts/admin :
+
+```bash
+SUPABASE_ACCESS_TOKEN=...
+SUPABASE_DB_URL=...
+SUPABASE_DB_PASSWORD=...
+SUPABASE_SERVICE_ROLE_KEY=...
+```
+
+Ne jamais passer service-role/access token/DB password en `--dart-define`.
+
+## iOS -- chemin mainnet
+
+### Smoke test local dev
+
+Commande deja utilisee avec succes pour installer `Foodmi Dev` sur iPhone 16 Pro :
+
+```bash
+scripts/foodmi_app.sh dev ios run --mode release --device 00008140-00126D903693001C
+```
+
+Si iOS refuse le lancement : approuver le profil dans `Reglages > General > VPN et gestion de l'appareil`.
+
+### Build production
+
+```bash
+set -a
+source .env
+set +a
+
+flutter build ipa --release \
+  -t lib/main_production.dart \
+  --obfuscate \
+  --split-debug-info=build/symbols-ios \
+  --dart-define=ENVIRONMENT=production \
+  --dart-define=SUPABASE_URL=https://kiojfmsvckighowrceei.supabase.co \
+  --dart-define=SUPABASE_ANON_KEY=$SUPABASE_PROD_ANON_KEY \
+  --dart-define=GOOGLE_WEB_CLIENT_ID=$GOOGLE_WEB_CLIENT_ID \
+  --dart-define=REVENUECAT_APPLE_API_KEY=$REVENUECAT_APPLE_API_KEY \
+  --export-options-plist=ios/ExportOptions.plist
+```
+
+### Checklist iOS avant soumission
+
+- [ ] Bundle production `com.Foodmi.Foodmi` dans Xcode/App Store Connect.
+- [ ] Provisioning/certificats Apple production valides.
+- [ ] Produit(s) RevenueCat relies a App Store Connect.
+- [ ] Privacy Policy et Terms publics.
+- [ ] Notes for Review : HealthKit, camera, IA nutritionnelle, compte demo.
+- [ ] Tester abonnement/trial en sandbox.
+- [ ] Tester scan, onboarding, paywall, restore purchase, delete account.
+- [ ] Verifier `REQUIRE_AI_ENTITLEMENT=true` cote Supabase prod si l'IA est payante.
+
+## Android -- build, mais pas encore rollout
+
+### Build production AAB
+
+Prerequis : `android/keystore.properties` et keystore local non committes.
+
+```properties
+storePassword=<password>
+keyPassword=<password>
+keyAlias=<alias>
+storeFile=upload-keystore.jks
+```
+
+Commande :
+
+```bash
+set -a
+source .env
+set +a
+
 flutter build appbundle --release \
   --flavor production \
-  --dart-define=SUPABASE_URL=https://xxx.supabase.co \
-  --dart-define=SUPABASE_ANON_KEY=xxx \
-  --dart-define=GOOGLE_WEB_CLIENT_ID=xxx \
-  --dart-define=REVENUECAT_GOOGLE_API_KEY=xxx
-
-# Output : build/app/outputs/bundle/productionRelease/app-production-release.aab
+  -t lib/main_production.dart \
+  --obfuscate \
+  --split-debug-info=build/symbols-aab \
+  --dart-define=ENVIRONMENT=production \
+  --dart-define=SUPABASE_URL=https://kiojfmsvckighowrceei.supabase.co \
+  --dart-define=SUPABASE_ANON_KEY=$SUPABASE_PROD_ANON_KEY \
+  --dart-define=GOOGLE_WEB_CLIENT_ID=$GOOGLE_WEB_CLIENT_ID \
+  --dart-define=REVENUECAT_GOOGLE_API_KEY=$REVENUECAT_GOOGLE_API_KEY
 ```
 
-## Build iOS
+Output attendu :
+
+```text
+build/app/outputs/bundle/productionRelease/app-production-release.aab
+```
+
+### Pourquoi Android n'est pas pret
+
+- Pas de validation Play Console complete.
+- AAB signe non qualifie sur vraie matrice Android.
+- Health Connect et permissions sensibles a declarer.
+- Data Safety a remplir avec precision.
+- Tests tablette/pliable/orientation manquants.
+- Google Sign-In doit etre valide avec SHA app signing + upload key.
+
+Voir `app/PLAY_STORE_READINESS.md`.
+
+## Readiness prod locale
+
+Commande complete :
 
 ```bash
-flutter build ipa --release \
-  --dart-define=SUPABASE_URL=https://xxx.supabase.co \
-  --dart-define=SUPABASE_ANON_KEY=xxx \
-  --dart-define=GOOGLE_WEB_CLIENT_ID=xxx \
-  --dart-define=REVENUECAT_APPLE_API_KEY=xxx \
-  --export-options-plist=ios/ExportOptions.plist
-
-# Output : build/ios/ipa/FoodMi.ipa
+CHECK_REMOTE=1 RUN_FULL_TESTS=1 RUN_BUILDS=1 scripts/prod_readiness_check.sh
 ```
 
-## Upload
+Commande rapide :
 
-### Google Play Console
-1. App releases -> Production -> Create new release
-2. Upload AAB
-3. Remplir release notes
-4. Sauvegarder en draft (ne PAS publier avant review)
-
-### App Store Connect
 ```bash
-xcrun altool --upload-app -f build/ios/ipa/FoodMi.ipa \
-  -t ios -u "apple-id@email.com" -p "app-specific-password"
+CHECK_REMOTE=1 RUN_FULL_TESTS=1 RUN_BUILDS=0 scripts/prod_readiness_check.sh
 ```
-Ou via Xcode : Window -> Organizer -> Distribute App
 
-## GitHub Secrets (CI/CD)
+Le gate doit verifier :
 
-### Android
-- `KEYSTORE_BASE64` -- base64 encode FoodMi-release.jks
-- `KEYSTORE_PASSWORD`
-- `KEY_PASSWORD`
-- `KEY_ALIAS`
+- variables prod obligatoires
+- absence de secrets serveur dans le code client
+- `flutter pub get`
+- `dart analyze`
+- `flutter test`
+- migrations et edge functions Supabase
+- dry-run `supabase db push`
+- builds release si `RUN_BUILDS=1`
 
-### iOS
-- `P12_CERTIFICATE_BASE64`
-- `P12_PASSWORD`
-- `PROVISION_PROFILE_BASE64`
+## GitHub Actions / secrets
 
-### Partages
-- `SUPABASE_URL`, `SUPABASE_ANON_KEY`
-- `GOOGLE_WEB_CLIENT_ID`
-- `REVENUECAT_GOOGLE_API_KEY`, `REVENUECAT_APPLE_API_KEY`
+Production GitHub environment :
 
-## Apple Review -- Notes importantes
+```text
+SUPABASE_URL
+SUPABASE_ANON_KEY
+SUPABASE_ACCESS_TOKEN
+SUPABASE_DB_URL
+GOOGLE_WEB_CLIENT_ID
+REVENUECAT_GOOGLE_API_KEY
+REVENUECAT_APPLE_API_KEY
+KEYSTORE_BASE64
+KEYSTORE_PASSWORD
+KEY_PASSWORD
+KEY_ALIAS
+P12_CERTIFICATE_BASE64
+P12_PASSWORD
+PROVISION_PROFILE_BASE64
+KEYCHAIN_PASSWORD
+```
 
-- **HealthKit** : Apple est strict. Preparer un texte dans "Notes for Review" expliquant pourquoi HealthKit est utilise
-- **Compte demo** : creer un compte test dans Supabase avec donnees pre-remplies
-- **Privacy Policy** : doit etre accessible a une URL publique (foodmi.app/privacy)
+## Store review
 
-## Delais de review
+### Apple
 
-- Apple : 24-48h (parfois 1 semaine si HealthKit)
-- Google : 1-7 jours (premier build souvent plus long)
+- Review souvent 24-48h, mais HealthKit peut rallonger.
+- Fournir compte demo avec donnees pre-remplies.
+- Expliquer pourquoi l'app lit les donnees sante.
+
+### Google
+
+- Premier review peut prendre plusieurs jours.
+- Ne pas lancer rollout production direct : commencer par internal testing / closed testing.
+- Verifier toutes les declarations Data Safety avant upload public.

@@ -1,6 +1,13 @@
-# FoodMi Knowledge Base
+# Foodmi Knowledge Base
 
-Base de connaissance partagee pour FoodMi. Ouvrir ce dossier dans Obsidian pour une navigation optimale.
+Base de connaissance partagee pour Foodmi. Ouvrir ce dossier dans Obsidian pour une navigation optimale.
+
+## Etat actuel -- 23 juin 2026
+
+- `foodmi/app` : commit `f28ede8e` pousse sur `main`.
+- iOS : sortie mainnet/App Store en priorite. La validation locale recente a ete faite sur iPhone 16 Pro avec `Foodmi Dev`; la build publique doit utiliser `prod`, `com.Foodmi.Foodmi`, RevenueCat Apple et les secrets production.
+- Android / Play Store : pas pret pour rollout. Il manque la validation AAB signee, la configuration Play Console, les tests Android multi-supports et la checklist Data Safety / Health Connect / permissions.
+- Ce repo est la source de verite pour le plan release et les points bloquants.
 
 ## Structure
 
@@ -10,13 +17,14 @@ knowledge/
 ├── app/
 │   ├── ARCHITECTURE.md         # Stack technique Flutter + Supabase
 │   ├── FEATURES.md             # Features existantes
-│   └── DEPLOYMENT.md           # Build, sign, upload stores
+│   ├── DEPLOYMENT.md           # Build, sign, upload stores
+│   └── PLAY_STORE_READINESS.md # Checklist Android / Play Store
 ├── website/
 │   ├── ARCHITECTURE.md         # Stack Next.js
 │   └── DEPLOYMENT.md           # Deploiement Vercel
 ├── roadmap/
 │   ├── BOARD.md                # Kanban : TODO / EN COURS / FAIT
-│   ├── LAUNCH-SPRINT.md        # Sprint launch Play Store + App Store
+│   ├── LAUNCH-SPRINT.md        # Sprint iOS mainnet + Android readiness
 │   └── BACKLOG.md              # Idees futures, features a explorer
 ├── marketing/
 │   ├── ASO.md                  # App Store Optimization
@@ -27,6 +35,7 @@ knowledge/
 ├── playbooks/
 │   └── CONVENTIONS.md          # Regles de code, naming, git
 └── daily/
+    ├── 2026-06-23.md           # Etat release iOS / Android
     └── TEMPLATE.md             # Template standup quotidien
 ```
 

@@ -1,102 +1,122 @@
-# App FoodMi -- Features (etat reel du code)
+# App Foodmi -- Features (etat reel)
 
-## Implemente et fonctionnel
+Reference repo : `foodmi/app` commit `f28ede8e` (23 juin 2026).
 
-### Auth
-- Email sign-in/sign-up via Supabase
-- Google Sign-In (ID token)
-- Apple OAuth
-- Password reset
-- Session refresh
-- Profil utilisateur CRUD (table `profiles`)
+## Statut global
+
+- iOS : candidat mainnet en preparation. Le build dev release a ete installe sur iPhone 16 Pro ; la soumission publique doit maintenant passer par la config production.
+- Android : pas pret Play Store. Les features existent en grande partie, mais la qualif Android multi-supports n'est pas faite.
+- Produit : premium-first via RevenueCat, pas de pubs.
+
+## Fonctionnel / code present
+
+### Auth et compte
+
+- Supabase Auth : email, login, reset password.
+- Google Sign-In.
+- Apple OAuth cote app.
+- Profil utilisateur, preferences, allergies, conditions sante, categories repas.
+- Suppression compte via backend dedie.
+- Secure storage helper et nettoyage session.
 
 ### Onboarding
-- Flow conversationnel en 40+ etapes (1800+ lignes)
-- Collecte : genre, objectif, date naissance, taille/poids, preferences alimentaires, allergies, conditions sante, morphologie, motivation, obstacles
-- Persistance progress via SharedPreferences (reprise si interruption)
-- Tracking analytics vers Supabase (`onboarding_analytics`)
-- Paywall integre, creation compte, permission camera, confirmation privacy
 
-### Monetisation (RevenueCat)
-- Init, login/logout, purchase, restore
-- Detection trial, dates expiration
-- Provider `isPremiumProvider`
-- Trial 3 jours, abonnement mensuel/annuel
-- Pas de pubs
+- Flow conversationnel long avec collecte objectif, morphologie, habitudes, motivation, obstacles, preferences, allergies, conditions sante.
+- Persistance de progression onboarding.
+- Paywall integre.
+- Permissions camera et Health Connect / Apple Health dans le flow.
+- Tests de persistance et paywall presents.
 
-### Backend IA (Genkit)
-- Service configure avec OpenAI plugin
-- Route via Supabase Edge Function (`ai-proxy`)
-- Modeles exposes : vision, chat, reasoning, content, text
-- Auto-refresh sur changement token auth
+### Scan et analyse alimentaire
 
-## UI complete mais donnees en dur (pas connecte au backend)
+- Ecran scan avec camera / image picker.
+- Analyse de repas via service IA vision.
+- Analyse menu/table avec ecrans dedies.
+- Resultats editables, recalcul portions/macros, sauvegarde repas.
+- Validation photo et schemas de sortie IA.
+- Risque a tester : latence reseau, erreurs IA, permissions camera/images sur Android 13+, reprise apres refus permission.
 
-### Dashboard
-- Anneau calories, selecteur date, apercu macros, repas du jour, recompense, defis
-- UI polie avec glassmorphism + animations
-- **Donnees hardcodees** (calories=1934, goal=2046, repas mock)
+### Journal, repas et nutrition
 
-### Recherche / Detail aliment
-- Ecran recherche avec barre, chips categories, liste aliments
-- Detail avec macros, infos nutritionnelles, conseil IA
-- **10 fruits hardcodes** (`food_mock_data.dart`), pas de requete Supabase
+- Repositories repas et poids.
+- `meal_service`, `food_database_service`, `open_food_facts_service`, cache aliment.
+- Dashboard nutrition, calories, macros, repas recents, hydratation locale.
+- Recherche aliment et detail premium.
+- Tests sur providers repas et page nutrition.
 
-### Ajout aliment
-- Quick add macros, recherche recents, ajout manuel
-- **Pas de persistence**
+### Assistant IA
+
+- Hub assistant, chat, suggestions, contenus generes.
+- Services assistant et execution d'outils IA.
+- Prompt builder durci et tests dedies.
+- Contenus : recettes, tips, weekly analysis, weekly menu.
+- Risque a tester : quotas OpenRouter/Supabase, entitlement premium, streaming/timeout, messages offline.
+
+### Sante
+
+- Health hub.
+- Apple Health / Health Connect via package `health`.
+- Donnees : pas, calories, distance, sommeil, rythme cardiaque, HRV, SpO2, glucose, tension, cholesterol selon disponibilite plateforme.
+- Vital scan / PPG service.
+- Rapports sante IA et exports.
+- Risque review : permissions Health Connect / HealthKit doivent etre justifiees et limitees aux usages affiches dans l'app.
 
 ### Exercice
-- Liste 3 types (course, muscu, manuel)
-- Formulaire : intensite, duree, distance, notes
-- **Affiche un SnackBar et pop, rien n'est sauvegarde**
 
-### Profil
-- User card, stats, poids, IMC, photos progres
-- **Tout hardcode** (username "bizdebusiness", stats fixes)
-
-### Settings
-- Langue, notifs, apparence, infos perso, objectifs, unites, about, privacy, terms, aide, logout
-- **Tous les `onTap` sont vides `() {}`**
+- Ecrans course, force, manuel.
+- Logs exercice, detail sheet, analysis IA.
+- Repository exercice et migration media exercice.
+- Permissions activity recognition cote Android.
 
 ### Progres
-- Selecteur periode (semaine/mois/annee), graphique poids (fl_chart), cards resume
-- Le toggle semaine/mois/annee fonctionne
-- **Donnees hardcodees** (arrays statiques)
 
-### Assistant
-- Hub avec 7 capacites (meal plan, exercices, conseils, revue hebdo, analyse progres, recettes, programme)
-- Navigation vers ecran chat
+- Poids, courbes, photos progression, comparaison avant/apres.
+- Provider stats progression.
+- Tests sur widgets progression/profile.
 
-### Chat
-- Input texte, bulles messages, scroll
-- **Reponse automatique hardcodee apres 800ms** -- pas connecte a Genkit/IA
-- Messages pas persistes
+### Profil et settings
 
-### Scan
-- 3 ecrans : scan, analyse (progress simule 0-100%), resultat (mock)
-- **Pas de camera, pas d'IA** -- le scan est simule, les resultats sont hardcodes
-- `camera` et `mobile_scanner` dans pubspec mais pas utilises
+- Profil, settings, langue, allergies, diet/allergies, conditions sante, categories repas.
+- Aide/support, privacy, terms, storage, change password.
+- Connexion Apple Health / Google Health depuis profil.
 
-## N'existe pas du tout
+### i18n
 
-| Feature | Etat |
-|---------|------|
-| Scan camera reel | Pas implemente (simule) |
-| Scan frigo | N'existe pas |
-| Scan ticket de caisse | N'existe pas |
-| Scan barcode | Dep dans pubspec, zero code |
-| Gamification (badges, XP, streaks) | Dossier vide |
-| Sante (glycemie, tension) | Dossier vide |
-| Meal logging / journal repas | Dossier vide |
-| Offline / sync (Hive) | Deps dans pubspec, zero code |
-| Notifications push | Deps dans pubspec, zero code |
-| HealthKit / Google Fit | Dep dans pubspec, zero code |
-| Speech to text | Dep dans pubspec, zero code |
-| Text to speech | Dep dans pubspec, zero code |
-| Export PDF | Dep dans pubspec, zero code |
-| Partage social | Dep dans pubspec, zero code |
+- 30 locales ARB.
+- Support RTL arabe.
+- Localizations generees commitees.
+- Risque a tester : textes longs sur petites resolutions Android et tablettes.
 
-## Deps pubspec inutilisees (a nettoyer)
+### Observabilite et qualite
 
-`hive`, `hive_flutter`, `mobile_scanner`, `health`, `speech_to_text`, `flutter_tts`, `pdf`, `share_plus`, `google_mobile_ads`, `flutter_local_notifications`, `firebase_messaging`, `connectivity_plus`
+- Sentry optionnel via `SENTRY_DSN`.
+- Telemetry best-effort Supabase.
+- `dart analyze`, `flutter test`, couverture CI avec seuil.
+- Responsive smoke tests ajoutes.
+
+## Points a valider avant App Store iOS
+
+- Build production `com.Foodmi.Foodmi` avec `lib/main_production.dart`.
+- RevenueCat Apple API key et produits App Store Connect.
+- Privacy Policy / Terms accessibles publiquement.
+- Notes for Review : HealthKit, IA nutritionnelle, compte demo.
+- `REQUIRE_AI_ENTITLEMENT=true` cote Supabase prod si l'IA doit etre reservee aux abonnes.
+- Test reel sur iPhone 16 Pro et au moins un iPhone plus petit.
+
+## Points a valider avant Play Store Android
+
+- AAB production signe avec keystore Foodmi.
+- RevenueCat Google API key + produit Play Console.
+- Google Sign-In : SHA-1/SHA-256 upload key et app signing key.
+- Health Connect : declarations Play Console + permissions justifiees.
+- Data Safety : camera, photos, health data, nutrition, identifiers, purchases, crash logs.
+- Tests telephones, tablettes, pliables, orientations, API 26 a recent.
+- Voir `app/PLAY_STORE_READINESS.md`.
+
+## Risques connus
+
+- Play Store n'est pas pret : ne pas publier Android avant matrice QA complete.
+- Les permissions Android sont sensibles : camera, images, micro, activity recognition, Health Connect.
+- Les claims marketing "scan en 3 secondes" doivent rester vrais sur devices Android moyens.
+- Les screenshots store doivent correspondre aux features reellement testees.
+- Les builds prod dependent de secrets `.env` et GitHub environments ; ne jamais les committer.

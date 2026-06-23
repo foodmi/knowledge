@@ -1,5 +1,15 @@
 # Backlog -- Idees & Features Futures
 
+## Release Hardening
+
+- [ ] Firebase Test Lab / device farm Android avant rollout Play Store
+- [ ] Checklist regression tablette Android a chaque release majeure
+- [ ] Tests automatises screenshots RTL et grandes polices
+- [ ] Monitoring ANR/crash Play Console relie au process release
+- [ ] Runbook incident post-release iOS/Android
+- [ ] Matrice compatibilite Health Connect par version Android
+- [ ] Script de verification SHA Google Sign-In / Play App Signing
+
 ## App
 
 - [ ] Widget iOS (calories du jour)

@@ -1,106 +1,133 @@
-# App FoodMi -- Architecture Technique
+# App Foodmi -- Architecture Technique
 
 Repo : [foodmi/app](https://github.com/foodmi/app)
+Dernier commit reference : `f28ede8e` sur `main` (23 juin 2026).
 
 ## Stack
 
 | Couche | Techno |
 |--------|--------|
-| Framework | Flutter 3.24+ / Dart 3.10.4 |
-| State | Riverpod 2 (annotation + codegen) |
-| Routing | go_router 14 |
-| Backend | Supabase (PostgreSQL, Auth, Storage, Edge Functions) |
-| IA | OpenRouter API (Claude Sonnet 4, GPT-5.3) + Genkit + genkit_openai |
-| Auth | Supabase Auth + Google Sign-In |
-| Monetisation | RevenueCat (purchases_flutter) |
-| Stockage local | Hive (chiffre) + SharedPreferences |
-| CI/CD | GitHub Actions (3 workflows: android, ios, test) |
-| i18n | 30 langues via ARB files |
+| Framework | Flutter / Dart SDK `^3.10.4` |
+| Etat | Riverpod 2 |
+| Navigation | `MaterialApp` + `Navigator` / `MaterialPageRoute` |
+| Backend | Supabase Auth, PostgreSQL, Storage, Edge Functions |
+| IA | Genkit + OpenRouter via Supabase Edge Functions |
+| Paiements | RevenueCat (`purchases_flutter`, `purchases_ui_flutter`) |
+| Crash / telemetry | Sentry optionnel + tables Supabase `app_events` / `app_errors` |
+| Local | SharedPreferences, Hive, secure storage |
+| i18n | 30 locales ARB + localizations generees |
+| CI/CD | GitHub Actions + scripts locaux |
 
-## Architecture : Clean Architecture + Feature-First
+## Entrees et environnements
 
-```
+| Env | Entry point | Android flavor | Bundle / applicationId | App name |
+|-----|-------------|----------------|------------------------|----------|
+| Dev | `lib/main_dev.dart` | `dev` | `com.Foodmi.Foodmi.dev` | Foodmi Dev |
+| Prod | `lib/main_production.dart` | `production` | `com.Foodmi.Foodmi` | Foodmi |
+
+Points importants :
+
+- Android a deux flavors Gradle : `dev` et `production`.
+- iOS n'a pas de flavor Xcode separe. Le script `scripts/foodmi_app.sh` force les bons build settings via `--dart-define` et `xcodebuild`.
+- Ne pas lancer `flutter run --release -t lib/main_dev.dart` directement sur iOS : utiliser le script.
+- Les secrets runtime sont injectes au build ; les secrets operateur Supabase ne doivent jamais aller dans `--dart-define`.
+
+## Structure principale
+
+```text
 lib/
-├── app.dart                    # MaterialApp + ProviderScope + Router
-├── main.dart                   # Entry point (dev)
-├── main_production.dart        # Entry point (prod)
-├── config/                     # Env switching (dev/staging/prod)
-├── core/                       # Transversal : theme, router, utils, widgets
-├── features/                   # Modules fonctionnels (voir FEATURES.md)
-├── services/                   # Services transversaux (IA, sync, notifs, IAP)
-├── data/                       # Supabase client
-└── l10n/                       # 30 fichiers ARB
+  config/                 # AppConfig + env dev/prod
+  core/                   # Theme, widgets, utils, secure storage
+  data/repositories/      # Repositories Supabase
+  features/
+    assistant/            # Hub assistant, chat, contenus generes
+    auth/                 # Login, reset password, OAuth
+    dashboard/            # Journal, calories, eau, glucose, poids
+    exercise/             # Exercise logging et analyses IA
+    food/                 # Recherche/detail aliments
+    health/               # Health hub, tension, cholesterol, vital scan
+    journal/              # Recherche aliment et journal repas
+    navigation/           # Bottom navigation + scan action
+    notifications/        # UI notifications
+    onboarding/           # Onboarding conversationnel + paywall
+    profile/              # Profil, settings, allergies, conditions sante
+    progress/             # Poids, photos progres, comparaisons
+    scan/                 # Scan repas, menu/table analysis, resultats
+    settings/             # Langue
+    splash/               # Splash
+  l10n/                   # ARB + localizations
+  models/                 # Modeles partages
+  providers/              # Riverpod providers
+  services/               # IA, Supabase, sync, health, RevenueCat, telemetry
+  main.dart
+  main_dev.dart
+  main_production.dart
 ```
 
-## Design System
+## Backend Supabase
 
-- **Theme** : dark mode uniquement
-- **Primary** : `#E84520` (orange)
-- **Background** : `#0E0E11`
-- **Surface** : `#1A1A2E`
-- **Font** : Google Fonts (Inter)
-- **Macros** : Calories=#E84520, Proteines=#E74C3C, Glucides=#5CB85C, Lipides=#FFB347
-- **Mascotte** : robot FoodMi orange, present sur dashboard/scan/assistant
+Tables et domaines principaux :
 
-## Navigation (go_router + ShellRoute)
+- profils, preferences utilisateur, onboarding
+- meals, foods, recipes, meal categories
+- exercises, weight entries, progress photos
+- blood glucose, blood pressure, cholesterol, vital/health data
+- assistant conversations, generated contents, suggestions
+- telemetry `app_events` et `app_errors`
 
-```
-/ -> redirect /onboarding ou /home
-├── /onboarding        # Flow 41 etapes
-├── /auth              # login, signup, forgot-password
-└── /home (Shell)      # 4 tabs + FAB central
-    ├── /dashboard
-    ├── /progress
-    ├── /assistant -> /chat/:id
-    ├── /profile -> /settings
-    ├── /scan -> /analysis -> /result
-    ├── /food -> /search, /detail/:id, /add
-    └── /exercise -> /list, /form/:type
-```
+Edge Functions importantes :
 
-## Supabase Backend
+- `ai-proxy` / `openrouter-proxy` : appels IA server-side
+- generateurs de contenus, tips, menus, emails
+- `delete-account` : suppression compte / RGPD
 
-### Tables principales
-profiles, meals, exercises, weight_entries, blood_glucose_entries, blood_pressure_entries, water_intake, ai_conversations, ai_messages, ai_suggestions, foods, recipes
+Storage :
 
-Toutes avec RLS active.
-
-### Edge Functions
-- `ai-proxy` -- Route IA (cle API server-side)
-- `openrouter-proxy` -- Proxy OpenRouter
-- `daily-content-generator` -- Tips quotidiens
-- `translate-foods` / `translate-ingredients` -- Traductions
-- `scheduled-notifications` -- Notifs cron
-- `send-welcome-email` / `send-menu-email` / `send-subscription-email` -- Emails
-- `delete-account` -- Suppression RGPD
-
-### Storage Buckets
-- `meal-images` (prive) -- Photos repas
-- `progress-photos` (prive) -- Photos corporelles
-- `food-icons` (public) -- Icones categories
-- `avatars` (prive) -- Photos profil
-
-## Environments
-
-| Env | Bundle ID | Supabase |
-|-----|-----------|----------|
-| Dev | `com.Foodmi.Foodmi.dev` | Projet dev (eu-west-3) |
-| Prod | `com.Foodmi.Foodmi` | Projet prod (eu-west-3) |
-
-Dev = auto-premium, no ads, no paywall.
+- images repas
+- progress photos
+- food icons
+- avatars
 
 ## IA
 
-```
-Flutter -> GenkitService -> Supabase Edge Function (ai-proxy) -> OpenRouter
+Flux general :
+
+```text
+Flutter services -> GenkitService / services IA -> Supabase Edge Function -> OpenRouter
 ```
 
-### Modeles
-- Vision : scan alimentaire, analyse frigo, tickets de caisse
-- Chat : assistant nutritionnel
-- Reasoning : rapports sante
+Services IA importants :
 
-### Temperatures
-- Chat : 0.7
-- Analyse : 0.3
-- Deterministe : 0.1
+- `ai_vision_service.dart` : scan repas / menus / analyse image
+- `assistant_service.dart` : conversations assistant
+- `exercise_analysis_service.dart` : analyse d'exercice
+- `health_report_generator_service.dart` : rapport sante
+- `progress_analysis_service.dart` : analyse progression
+- `system_prompt_builder.dart` : prompts systeme durcis
+- schemas `lib/services/schemas/*` pour sorties structurees
+
+## Android
+
+- `applicationId` production : `com.Foodmi.Foodmi`
+- namespace Kotlin : `com.foodmi.foodmi`
+- `minSdk = 26` (Android 8.0+)
+- release signe via `android/keystore.properties`
+- permissions sensibles : camera, micro, images, activity recognition, Health Connect
+- Play Store pas pret tant que la matrice multi-device n'est pas passee.
+
+Voir `app/PLAY_STORE_READINESS.md`.
+
+## iOS
+
+- bundle production : `com.Foodmi.Foodmi`
+- bundle dev : `com.Foodmi.Foodmi.dev`
+- HealthKit actif avec entitlements simplifies
+- build iOS dev release valide localement sur iPhone 16 Pro
+- sortie publique : priorite App Store mainnet, avec RevenueCat Apple et secrets prod
+
+## Notes release
+
+- Dev = premium auto / no paywall effectif pour faciliter les tests.
+- Prod = RevenueCat actif ; ne pas soumettre sans produit Apple/Google configure.
+- Avant mainnet iOS : verifier `REQUIRE_AI_ENTITLEMENT=true` cote Supabase prod si l'acces IA doit etre reserve aux abonnes.
+- Avant Play Store : tester telephones Android, tablettes, pliables, orientations, permissions et Health Connect.

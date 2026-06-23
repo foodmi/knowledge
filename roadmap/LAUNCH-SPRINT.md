@@ -1,194 +1,135 @@
-# Sprints Hebdomadaires
+# Sprint Launch -- iOS Mainnet puis Android Play Store
 
-Chaque semaine on pioche des taches par type. On coche ce qui est fait, le reste passe a la semaine suivante.
+Mise a jour : 23 juin 2026.
 
----
+## Principe
 
-## Semaine 1 -- Config + Deploy + Visuels 30 langues
+1. Sortir iOS mainnet proprement.
+2. Ne pas publier Android tant que la checklist Play Store n'est pas verte.
+3. Traiter Android comme une vraie release separee, pas comme un simple port.
 
-### DEV
-- [ ] Unifier Bundle ID iOS dans Xcode
-- [ ] Resoudre iOS flavors (--dart-define au lieu de --flavor)
-- [ ] Retirer AdMob du code
-- [ ] Nettoyer deps pubspec inutilisees
-- [ ] GitHub Secrets pour CI/CD
-- [ ] Build AAB Android
-- [ ] Build IPA iOS
+## Semaine 1 -- iOS mainnet
 
-### ADMIN
-- [ ] Creer/verifier comptes Play Console + App Store Connect
-- [ ] Creer app en draft sur les deux stores
-- [ ] Configurer produits RevenueCat dans les 2 stores
+### Dev
 
-### DESIGN (visuels store -- GPT Image 2)
-Tout generer avec GPT Image 2 pour les 30 langues d'un coup.
+- [ ] Synchroniser `main` et verifier commit app `f28ede8e`.
+- [ ] Remplir `.env` prod local : Supabase prod, Google, RevenueCat Apple.
+- [ ] Verifier Supabase prod et edge functions.
+- [ ] Activer `REQUIRE_AI_ENTITLEMENT=true` si l'IA doit etre premium-only.
+- [ ] Lancer `dart analyze`.
+- [ ] Lancer `flutter test`.
+- [ ] Lancer `CHECK_REMOTE=1 RUN_FULL_TESTS=1 RUN_BUILDS=0 scripts/prod_readiness_check.sh`.
+- [ ] Build IPA production.
+- [ ] Tester build prod sur iPhone 16 Pro ou TestFlight.
+- [ ] Tester au moins un iPhone plus petit.
 
-**Icone**
-- [ ] Valider icone 1024x1024 PNG
-- [ ] Generer toutes tailles (`flutter_launcher_icons`)
+### App Store Connect
 
-**Screenshots 30 langues (GPT Image 2)**
-8 ecrans a generer :
+- [ ] Verifier bundle `com.Foodmi.Foodmi`.
+- [ ] Configurer produits/subscriptions.
+- [ ] Relier RevenueCat Apple.
+- [ ] Ajouter privacy nutrition labels.
+- [ ] Ajouter age rating.
+- [ ] Ajouter screenshots iOS.
+- [ ] Ajouter metadata FR/EN minimum.
+- [ ] Ajouter privacy policy / terms.
+- [ ] Creer compte demo reviewer.
+- [ ] Notes for Review : HealthKit, camera, IA nutritionnelle, achat sandbox.
 
-| # | Feature | Tagline EN | Description |
-|---|---------|-----------|-------------|
-| 1 | Scan | *Scan your meal in 3 seconds* | AI calorie tracking made easy — snap a photo, get instant results |
-| 2 | Nutrition | *Analyze everything you eat* | AI breaks down every meal into calories, protein, carbs, fat |
-| 3 | Chat | *Chat with your AI dietitian 24/7* | Personalized nutrition advice anytime, anywhere |
-| 4 | Diet Plan | *AI creates your personalized diet plan* | Tailored to your body, goals and preferences |
-| 5 | Tracker | *Track calories burned daily* | Log activities and see your real net balance |
-| 6 | Water | *Track your water intake* | Stay hydrated with daily water tracking |
-| 7 | Weight | *Watch the weight drop off* | Before & after photos + weight tracker to see your progress |
-| 8 | Barcode | *Free barcode scanner* | Scan any product barcode for instant nutrition info |
+### QA iOS
 
-Style : fond sombre #0E0E11, glow orange #E84520, mascotte piment FoodMi, iPhone 15 Pro mockup, texte blanc bold.
+- [ ] Onboarding complet.
+- [ ] Paywall, trial, purchase sandbox, restore.
+- [ ] Login email, Google, Apple.
+- [ ] Scan camera et galerie.
+- [ ] Menu/table analysis.
+- [ ] Dashboard apres sauvegarde repas.
+- [ ] Assistant IA.
+- [ ] HealthKit refuse / autorise / revoke.
+- [ ] Delete account.
 
-Pour chaque langue, generer les textes marketing traduits puis generer les screenshots avec GPT Image 2 :
+### Sortie
 
-| Code | Langue | Screenshots | Metadata |
-|------|--------|-------------|----------|
-| en | Anglais | [ ] | [ ] |
-| fr | Francais | [ ] | [ ] |
-| ar | Arabe (RTL) | [ ] | [ ] |
-| es | Espagnol | [ ] | [ ] |
-| de | Allemand | [ ] | [ ] |
-| pt | Portugais | [ ] | [ ] |
-| it | Italien | [ ] | [ ] |
-| nl | Neerlandais | [ ] | [ ] |
-| tr | Turc | [ ] | [ ] |
-| ru | Russe | [ ] | [ ] |
-| pl | Polonais | [ ] | [ ] |
-| ja | Japonais | [ ] | [ ] |
-| ko | Coreen | [ ] | [ ] |
-| zh | Chinois | [ ] | [ ] |
-| id | Indonesien | [ ] | [ ] |
-| th | Thai | [ ] | [ ] |
-| vi | Vietnamien | [ ] | [ ] |
-| sv | Suedois | [ ] | [ ] |
-| no | Norvegien | [ ] | [ ] |
-| da | Danois | [ ] | [ ] |
-| fi | Finnois | [ ] | [ ] |
-| ro | Roumain | [ ] | [ ] |
-| hu | Hongrois | [ ] | [ ] |
-| cs | Tcheque | [ ] | [ ] |
-| sk | Slovaque | [ ] | [ ] |
-| sl | Slovene | [ ] | [ ] |
-| hr | Croate | [ ] | [ ] |
-| bg | Bulgare | [ ] | [ ] |
-| el | Grec | [ ] | [ ] |
-| et | Estonien | [ ] | [ ] |
+- [ ] Upload IPA / TestFlight.
+- [ ] Corriger les blockers si Apple/TestFlight remonte un probleme.
+- [ ] Submit for Review Apple.
 
-Tailles a exporter :
-- iOS : 6.7" (1290x2796), 6.5" (1242x2688), 5.5" (1242x2208)
-- Google Play : portrait 9:16
+## Semaine 2 -- Android readiness, pas rollout public
 
-Total : 6 screenshots x 30 langues x 4 tailles = **720 images**
+### Build / Play Console
 
-**Feature Graphic Google Play**
-- [ ] Banniere 1024x500 (logo + tagline + apercu app) -- 1 par langue ou 1 universelle EN
+- [ ] Creer/verifier upload keystore.
+- [ ] Creer `android/keystore.properties` local.
+- [ ] Generer AAB production signe.
+- [ ] Creer app Play Console `com.Foodmi.Foodmi`.
+- [ ] Activer Play App Signing.
+- [ ] Uploader AAB en Internal testing.
+- [ ] Ajouter testeurs internes.
+- [ ] Configurer RevenueCat Google + produit Play.
+- [ ] Ajouter SHA-1/SHA-256 upload key + app signing key dans Google Cloud/Supabase.
 
-**Video Preview (optionnel, +25% conversion)**
-- [ ] 15-30 secondes portrait 9:16
-- [ ] Scan en action = wow moment
-- [ ] Sous-titres integres, son off par defaut
-- [ ] Decliner sous-titres 30 langues
+### Declarations Play
 
-### MARKETING (store metadata 30 langues)
-Generer pour les 30 langues d'un coup :
-- [ ] Titre (30 chars) adapte par langue (keywords locaux, pas juste traduction)
-- [ ] Subtitle iOS (30 chars) adapte par langue
-- [ ] Keywords iOS (100 chars par locale) -- mots-cles locaux
-- [ ] Description courte Google Play (80 chars) par langue
-- [ ] Description longue Google Play (4000 chars, keywords locaux) par langue
-- [ ] Release notes par langue
-- [ ] 4 CSL (Scanner, Weight Loss, Macro, Halal) avec screenshots + description par langue
+- [ ] Content Rating IARC.
+- [ ] Data Safety.
+- [ ] Ads = No ads.
+- [ ] App access / compte demo.
+- [ ] Health Connect permissions.
+- [ ] Target audience adults only.
+- [ ] Privacy Policy / Terms.
 
-### WEBSITE
-- [ ] Deployer sur Vercel + domaine foodmi.app
-- [ ] Remplacer 13x href="#" (store badges + socials)
-- [ ] Fix sitemap (retirer /login)
-- [ ] Ajouter composant Comparison dans page.tsx
+### QA Android telephones
 
----
+- [ ] Device recent Android 14/15/16.
+- [ ] Device moyen/bas de gamme.
+- [ ] Android 8/9/10 via device ou Firebase Test Lab.
+- [ ] Camera, galerie, micro, activity recognition.
+- [ ] Google Sign-In.
+- [ ] Purchase/restore sandbox Google Play.
+- [ ] Scan repas/menu/table.
+- [ ] Offline / reseau lent.
 
-## Semaine 2 -- Upload + Review + Submit
+### QA Android tablettes / pliables
 
-### DEV
-- [ ] Upload AAB sur Play Console
-- [ ] Upload IPA sur App Store Connect
-- [ ] Compte demo pour Apple reviewer
-- [ ] HealthKit review notes
+- [ ] Tablette 7"-8" portrait.
+- [ ] Tablette 10"-11" portrait.
+- [ ] Tablette landscape.
+- [ ] Pliable plie.
+- [ ] Pliable deplie.
+- [ ] Font scale 130% et 200%.
+- [ ] RTL arabe.
+- [ ] Onboarding, paywall, dashboard, scan result, profile/settings.
 
-### ADMIN
-- [ ] Content Rating (IARC) Google Play
-- [ ] Data Safety Google Play
-- [ ] App Privacy (nutrition labels) Apple
-- [ ] Submit for Review (Apple)
-- [ ] Start rollout (Google Play)
-- [ ] Uploader screenshots + metadata 30 langues sur les deux stores
+## Semaine 3 -- Android closed testing
 
-### MARKETING
-- [ ] Recruter 50 beta testers pour reviews
-- [ ] Preparer draft ProductHunt
+- [ ] Corriger les issues Android internes.
+- [ ] Relancer AAB.
+- [ ] Closed testing plus large.
+- [ ] Surveiller crashes et ANR.
+- [ ] Verifier Data Safety apres SDK scan Play.
+- [ ] Preparer release notes Android.
+- [ ] Decision Go/No-Go rollout progressif.
 
----
+## Semaine 4 -- Post-launch / ASO
 
-## Semaine 3 -- Post-launch + Distribution
+- [ ] Surveiller iOS metrics, crashes, reviews.
+- [ ] Iterer metadata iOS.
+- [ ] Finaliser Android production si closed testing est stable.
+- [ ] Lancer contenu SEO/ASO prioritaire.
+- [ ] Preparer updates toutes les 2 semaines.
 
-### MARKETING
-- [ ] Lancer ProductHunt
-- [ ] Premier article Medium
-- [ ] 5 reponses Quora
-- [ ] Premier post LinkedIn
-- [ ] Posts Reddit (r/loseit, r/nutrition, r/caloriecount)
-- [ ] Poster sur Indie Hackers
-- [ ] Apple Search Ads ($200, longtail keywords)
-- [ ] Repondre a CHAQUE review store
+## Definition of Done
 
-### WEBSITE
-- [ ] Configurer Google Analytics
-- [ ] Schema.org Organization
-- [ ] Configurer robots.txt pour AI crawlers
+### iOS
 
----
+- App Store review soumise ou acceptee.
+- Aucun crash bloquant dans parcours onboarding/paywall/scan.
+- Purchase/restore fonctionne.
+- Privacy et reviewer notes complets.
 
-## Semaine 4 -- Iteration ASO + Contenu
+### Android
 
-### MARKETING
-- [ ] Analyser rankings keywords par langue, ajuster ceux qui marchent pas
-- [ ] A/B test screenshots (Google Play Console)
-- [ ] 2eme article Medium
-- [ ] 5 nouvelles reponses Quora
-- [ ] 2 posts LinkedIn
-
-### WEBSITE
-- [ ] Creer llms.txt
-- [ ] Soumettre sitemap a Google Search Console + Bing
-- [ ] Creer profil Crunchbase
-
-### DEV
-- [ ] Connecter scan camera reel a Genkit vision
-- [ ] Connecter chat assistant a Genkit
-
----
-
-## Semaine 5+ -- Scale contenu + App backend
-
-### MARKETING
-- [ ] Iteration ASO mensuelle (3-5 keywords par langue)
-- [ ] 1 article Medium/semaine
-- [ ] 5 reponses Quora/semaine
-- [ ] 3 posts LinkedIn/semaine
-- [ ] Preparer Meta Ads si budget
-
-### WEBSITE
-- [ ] Pages comparaison : Foodmi vs MyFitnessPal, vs CalAI
-- [ ] Pages programmatiques "Calories in [food]" (top 100)
-
-### DEV
-- [ ] Dashboard : charger donnees reelles depuis Supabase
-- [ ] Meal logging : creer le module
-- [ ] Exercice : sauvegarder en Supabase
-- [ ] Profil : charger donnees user reelles
-- [ ] Settings : brancher les callbacks
-- [ ] Recherche aliment : requeter Supabase au lieu de mock
+- `app/PLAY_STORE_READINESS.md` coche.
+- Internal/closed testing stable.
+- Matrice telephones/tablettes/pliables validee.
+- Play Console ne remonte pas de blocker policy.

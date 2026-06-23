@@ -1,5 +1,11 @@
 # ASO -- App Store Optimization
 
+## Statut release -- 23 juin 2026
+
+- iOS : priorite immediate. Produire les assets App Store en premier.
+- Android : attendre la QA Play Store avant rollout. Les screenshots Google Play doivent etre pris/valides sur Android reel, y compris tablette, et ne pas montrer de flows non testes.
+- Locales prioritaires pour la premiere passe : en, fr, ar, es, de.
+
 ## Titre & Subtitle
 
 ```
@@ -36,6 +42,14 @@ calorie tracker, food scanner, AI calorie counter, macro tracker, nutrition trac
 6. "30+ langues, Halal, Vegan" -- differenciateur
 
 Tailles iOS : 6.7" (1290x2796), 6.5" (1242x2688), 5.5" (1242x2208)
+
+Google Play :
+- telephone portrait 9:16
+- tablette 7" si disponible
+- tablette 10" si disponible
+- feature graphic 1024x500
+
+Ne pas reutiliser aveuglement les screenshots iOS pour Android : verifier layout, system bars, textes longs, RTL et orientation tablette.
 
 ## Custom Store Listings Google Play (4 CSL)
 
